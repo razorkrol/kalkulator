@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Nowoczesny kalkulator do obliczania różnic wieku. Dowiedz się, kiedy będziesz dwa razy starszy lub młodszy od kogoś!">
+    <meta name="keywords" content="kalkulator wieku, różnica wieku, matematyka, wiek, obliczenia">
+    <meta name="author" content="Kalkulator Różnic Wieku">
+    <meta name="robots" content="index, follow">
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Kalkulator Różnic Wieku">
+    <meta property="og:description" content="Oblicz, kiedy będziesz dwa razy starszy lub młodszy od kogoś. Nowoczesny kalkulator z animacjami!">
+    <meta property="og:url" content="https://example.com">
+    
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:title" content="Kalkulator Różnic Wieku">
+    <meta property="twitter:description" content="Oblicz, kiedy będziesz dwa razy starszy lub młodszy od kogoś. Nowoczesny kalkulator z animacjami!">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="/favicon.ico">
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+    
+    <!-- Preload critical resources -->
+    <link rel="preload" href="./assets/css/style.css" as="style">
+    <link rel="preload" href="./assets/js/script.js" as="script">
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="./assets/css/style.css">
+    
+    <title>Kalkulator Różnic Wieku | Oblicz relacje wiekowe</title>
+</head>
+<body>
+    <div class="main-container">
+        <!-- Sekcja formularza -->
+        <div class="form-section">
+            <div class="container">
+                <form id="ageForm" class="form">
+                    <!-- Pole na mój wiek -->
+                    <div class="input-container">
+                        <input 
+                            type="number" 
+                            id="myAge" 
+                            name="myAge"
+                            placeholder="Twój wiek" 
+                            min="0" 
+                            max="150" 
+                            required 
+                            autocomplete="off"
+                            aria-label="Wprowadź swój wiek"
+                        >
+                    </div>
+                    
+                    <!-- Pole na wiek drugiej osoby -->
+                    <div class="input-container">
+                        <input 
+                            type="number" 
+                            id="otherAge" 
+                            name="otherAge"
+                            placeholder="Wiek drugiej osoby" 
+                            min="0" 
+                            max="150" 
+                            required 
+                            autocomplete="off"
+                            aria-label="Wprowadź wiek drugiej osoby"
+                        >
+                    </div>
+                    
+                    <!-- Wybór płci -->
+                    <div class="gender-container">
+                        <label class="gender-label">Płeć:</label>
+                        <div class="gender-options">
+                            <label class="gender-option">
+                                <input type="radio" name="gender" value="male" checked>
+                                <span class="gender-text">Mężczyzna</span>
+                            </label>
+                            <label class="gender-option">
+                                <input type="radio" name="gender" value="female">
+                                <span class="gender-text">Kobieta</span>
+                            </label>
+                        </div>
+                    </div>
+                    
+                    <!-- Przycisk oblicz -->
+                    <button type="submit" class="submit-btn" aria-label="Oblicz różnice wieku">
+                        Oblicz
+                    </button>
+                    
+                    <!-- Sekcja wyników -->
+                    <div id="result" class="result hidden" role="status" aria-live="polite"></div>
+                    
+                    <!-- Komunikaty błędów -->
+                    <div id="error" class="error hidden" role="alert" aria-live="assertive"></div>
+                </form>
+            </div>
+        </div>
+        
+        <!-- Sekcja z kołami -->
+        <div class="circles-section">
+            <div id="circlesContainer" class="circles-container hidden">
+                <div class="circles-row">
+                    <!-- Koło z moim wiekiem -->
+                    <div class="circle-group">
+                        <div class="age-circle left-circle">
+                            <div class="circle-content">
+                                <div id="myAgeDisplay" class="age-number">0</div>
+                            </div>
+                        </div>
+                        <div id="myAgeTitle" class="circle-title">Twój wiek</div>
+                    </div>
+                    
+                    <!-- Koło z wiekiem drugiej osoby -->
+                    <div class="circle-group">
+                        <div class="age-circle right-circle">
+                            <div class="circle-content">
+                                <div id="otherAgeDisplay" class="age-number">0</div>
+                            </div>
+                        </div>
+                        <div class="circle-title">Wiek drugiej osoby</div>
+                    </div>
+                </div>
+                
+                <!-- Informacja czasowa -->
+                <div id="timeInfo" class="time-info"></div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- JavaScript -->
+    <script src="./assets/js/script.js"></script>
+    
+    <!-- Schema.org structured data -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "WebApplication",
+        "name": "Kalkulator Różnic Wieku",
+        "description": "Nowoczesny kalkulator do obliczania różnic wieku i relacji wiekowych",
+        "url": "https://example.com",
+        "applicationCategory": "UtilityApplication",
+        "operatingSystem": "All",
+        "browserRequirements": "HTML5, CSS3, JavaScript ES6+",
+        "offers": {
+            "@type": "Offer",
+            "price": "0",
+            "priceCurrency": "PLN"
+        }
+    }
+    </script>
+</body>
+</html> 

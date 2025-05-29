@@ -1,0 +1,55 @@
+{
+  "name": "kalkulator-roznic-wieku",
+  "version": "1.0.0",
+  "description": "Nowoczesny kalkulator do obliczania różnic wieku z wizualnymi animacjami",
+  "main": "index.html",
+  "scripts": {
+    "start": "python -m http.server 8000",
+    "serve": "npx serve .",
+    "build": "echo 'Projekt nie wymaga budowania - pliki statyczne'",
+    "test": "echo 'Brak testów automatycznych - testowanie manualne'",
+    "deploy": "echo 'Instrukcje wdrożenia w README.md'"
+  },
+  "keywords": [
+    "kalkulator",
+    "wiek",
+    "różnica wieku",
+    "matematyka",
+    "javascript",
+    "html5",
+    "css3",
+    "responsywny",
+    "animacje",
+    "glassmorphism"
+  ],
+  "author": {
+    "name": "Kalkulator Różnic Wieku",
+    "email": "kontakt@example.com",
+    "url": "https://example.com"
+  },
+  "license": "MIT",
+  "homepage": "https://example.com",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/username/kalkulator-roznic-wieku.git"
+  },
+  "bugs": {
+    "url": "https://github.com/username/kalkulator-roznic-wieku/issues"
+  },
+  "engines": {
+    "node": ">=14.0.0"
+  },
+  "browserslist": [
+    "> 1%",
+    "last 2 versions",
+    "not dead",
+    "not ie 11"
+  ],
+  "devDependencies": {},
+  "dependencies": {},
+  "files": [
+    "index.html",
+    "assets/",
+    "README.md"
+  ]
+} 
