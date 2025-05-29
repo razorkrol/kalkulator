@@ -137,89 +137,71 @@ class AgeCalculator {
         const texts = this.getGenderTexts(gender);
         
         // Obliczenia matematyczne
-        // Dla "dwa razy starszy": myAge + t1 = 2 * (otherAge + t1)
-        // Rozwiązanie: t1 = myAge - 2 * otherAge
         const t1 = myAge - 2 * otherAge;
-        
-        // Dla "dwa razy młodszy": otherAge + t2 = 2 * (myAge + t2)
-        // Rozwiązanie: t2 = otherAge - 2 * myAge
         const t2 = otherAge - 2 * myAge;
-        
-        // Sprawdź limity wyników
         const myAgeAtT1 = myAge + t1;
         const otherAgeAtT1 = otherAge + t1;
         const myAgeAtT2 = myAge + t2;
         const otherAgeAtT2 = otherAge + t2;
-
-        // Jeśli którykolwiek z wyników przekracza 130 lat, pokaż błąd
-        if (
-            myAgeAtT1 > 130 || otherAgeAtT1 > 130 ||
-            myAgeAtT2 > 130 || otherAgeAtT2 > 130 ||
-            Math.abs(t1) > 130 || Math.abs(t2) > 130
-        ) {
-            this.showError('Wynik przekracza limit 130 lat. Zmień dane wejściowe.');
-            return;
-        }
-        
         let result = `<div class="result-item">Różnica wieku: <span class="difference">${ageDifference} lat</span></div>`;
-        
-        // Sprawdź która relacja jest możliwa
         let relationFound = false;
         let circleMyAge = null;
         let circleOtherAge = null;
         let titleText = '';
         let timeText = '';
-        
-        // Sprawdź relację "2x starszy"
-        if (myAgeAtT1 > 0 && otherAgeAtT1 > 0) {
+        // Sprawdź relację "2x starszy" tylko jeśli wieki są dodatnie i nie przekraczają limitu
+        if (
+            myAgeAtT1 > 0 && otherAgeAtT1 > 0 &&
+            myAgeAtT1 <= 130 && otherAgeAtT1 <= 130 &&
+            Math.abs(t1) <= 130
+        ) {
             circleMyAge = myAgeAtT1;
             circleOtherAge = otherAgeAtT1;
-            
             if (t1 === 0) {
                 titleText = texts.titleIsOlder;
-                result += `<div class="result-item relation">Obecnie ${texts.isOlder}</div>`;
+                result += `<div class=\"result-item relation\">Obecnie ${texts.isOlder}</div>`;
                 timeText = `Obecnie ${texts.isOlder}`;
             } else if (t1 > 0) {
                 titleText = texts.titleWillBeOlder;
-                result += `<div class="result-item relation">Za ${t1} lat ${texts.willBeOlder}</div>`;
+                result += `<div class=\"result-item relation\">Za ${t1} lat ${texts.willBeOlder}</div>`;
                 timeText = `Za ${t1} lat ${texts.willBeOlder}`;
             } else {
                 titleText = texts.titleWasOlder;
-                result += `<div class="result-item relation">${Math.abs(t1)} lat temu ${texts.wasOlder}</div>`;
+                result += `<div class=\"result-item relation\">${Math.abs(t1)} lat temu ${texts.wasOlder}</div>`;
                 timeText = `${Math.abs(t1)} lat temu ${texts.wasOlder}`;
             }
             relationFound = true;
         }
-        
-        // Sprawdź relację "2x młodszy" (tylko jeśli nie znaleziono poprzedniej)
-        if (!relationFound && myAgeAtT2 > 0 && otherAgeAtT2 > 0) {
+        // Sprawdź relację "2x młodszy" tylko jeśli nie znaleziono poprzedniej, wieki są dodatnie i nie przekraczają limitu
+        if (!relationFound &&
+            myAgeAtT2 > 0 && otherAgeAtT2 > 0 &&
+            myAgeAtT2 <= 130 && otherAgeAtT2 <= 130 &&
+            Math.abs(t2) <= 130
+        ) {
             circleMyAge = myAgeAtT2;
             circleOtherAge = otherAgeAtT2;
-            
             if (t2 === 0) {
                 titleText = texts.titleIsYounger;
-                result += `<div class="result-item relation">Obecnie ${texts.isYounger}</div>`;
+                result += `<div class=\"result-item relation\">Obecnie ${texts.isYounger}</div>`;
                 timeText = `Obecnie ${texts.isYounger}`;
             } else if (t2 > 0) {
                 titleText = texts.titleWillBeYounger;
-                result += `<div class="result-item relation">Za ${t2} lat ${texts.willBeYounger}</div>`;
+                result += `<div class=\"result-item relation\">Za ${t2} lat ${texts.willBeYounger}</div>`;
                 timeText = `Za ${t2} lat ${texts.willBeYounger}`;
             } else {
                 titleText = texts.titleWasYounger;
-                result += `<div class="result-item relation">${Math.abs(t2)} lat temu ${texts.wasYounger}</div>`;
+                result += `<div class=\"result-item relation\">${Math.abs(t2)} lat temu ${texts.wasYounger}</div>`;
                 timeText = `${Math.abs(t2)} lat temu ${texts.wasYounger}`;
             }
             relationFound = true;
         }
-        
         if (!relationFound) {
-            result += `<div class="result-item">Brak możliwej relacji 2x przy dodatnich wiekach</div>`;
+            this.showError('Wynik przekracza limit 130 lat lub brak możliwej relacji 2x przy dodatnich wiekach.');
             this.hideCircles();
         } else {
             this.showCircles(circleMyAge, circleOtherAge, titleText, timeText);
+            this.showResult(result);
         }
-        
-        this.showResult(result);
     }
 
     /**
