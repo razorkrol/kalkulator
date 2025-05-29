@@ -145,14 +145,25 @@ class AgeCalculator {
         // Rozwiązanie: t2 = otherAge - 2 * myAge
         const t2 = otherAge - 2 * myAge;
         
-        let result = `<div class="result-item">Różnica wieku: <span class="difference">${ageDifference} lat</span></div>`;
-        
-        // Sprawdź która relacja jest możliwa
+        // Sprawdź limity wyników
         const myAgeAtT1 = myAge + t1;
         const otherAgeAtT1 = otherAge + t1;
         const myAgeAtT2 = myAge + t2;
         const otherAgeAtT2 = otherAge + t2;
+
+        // Jeśli którykolwiek z wyników przekracza 130 lat, pokaż błąd
+        if (
+            myAgeAtT1 > 130 || otherAgeAtT1 > 130 ||
+            myAgeAtT2 > 130 || otherAgeAtT2 > 130 ||
+            Math.abs(t1) > 130 || Math.abs(t2) > 130
+        ) {
+            this.showError('Wynik przekracza limit 130 lat. Zmień dane wejściowe.');
+            return;
+        }
         
+        let result = `<div class="result-item">Różnica wieku: <span class="difference">${ageDifference} lat</span></div>`;
+        
+        // Sprawdź która relacja jest możliwa
         let relationFound = false;
         let circleMyAge = null;
         let circleOtherAge = null;
